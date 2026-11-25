@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>足立区Webハザードマップ</title>
+  <meta name="description" content="東京都足立区のWebハザードマップ（地震／洪水／高潮／内水）。国・東京都のオープンデータを活用した試作版">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/style.css?v=20261125">
+</head>
+<body class="map-page">
+  <!-- 左パネル：タイトル・レイヤ情報 -->
+  <aside id="side" class="side">
+    <a class="logo" href="index.html" data-i18n-title="topBtn">
+      <span class="logo-town" data-i18n="town">足立区</span>
+      <span class="logo-sub" data-i18n="subtitle">Webハザードマップ</span>
+    </a>
+    <div class="side-head">
+      <button type="button" class="side-head-toggle" id="sideToggle" aria-expanded="true">
+        <span class="tri" aria-hidden="true">▾</span><span data-i18n="layerInfo">レイヤ情報</span>
+      </button>
+      <button type="button" class="btn-sm" id="legendBtn" data-i18n="legendBtn">凡例表示</button>
+    </div>
+    <div class="tree" id="tree"></div>
+    <div class="side-foot">
+      <label class="opacity">
+        <span data-i18n="opacity">透過率</span>
+        <input type="range" id="opacity" min="0" max="90" step="10" value="30">
+        <output id="opacityVal">30%</output>
+      </label>
+    </div>
+  </aside>
+
+  <!-- 地図エリア -->
+  <main class="main">
+    <div class="topbar">
+      <div class="cats" id="cats" role="radiogroup"></div>
+      <div class="tools">
+        <button type="button" class="btn-tool" id="elevBtn" data-i18n="elevBtn">標高表示</button>
+        <button type="button" class="btn-tool" id="fullBtn" data-i18n="fullBtn">全域表示</button>
+        <button type="button" class="btn-tool" id="printBtn" data-i18n="printBtn">印刷画面</button>
+        <label class="lang">
+          <span class="lang-ico" aria-hidden="true">🌐</span>
+          <span class="sr" data-i18n="language">Language</span>
+          <select id="langSel" aria-label="Language"></select>
+        </label>
+      </div>
+    </div>
+    <div class="copy" data-i18n="copyright">足立区Webハザードマップ</div>
+
+    <div id="map" class="map"></div>
+
+    <!-- 住所検索・背景地図切替 -->
+    <div class="search-box" id="searchBox">
+      <p class="search-note"><span data-i18n="searchNote"></span><br><a href="index.html#search" data-i18n="searchAbout">住所検索機能について</a></p>
+      <form class="search-form" id="searchForm">
+        <input type="search" id="searchInput" data-i18n-ph="searchPh" autocomplete="off">
+        <button type="submit" aria-label="search">
+          <svg viewBox="0 0 24 24" width="18" height="18"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+    </div>
+    <div class="map-btns">
+      <button type="button" class="map-btn bm-btn" id="bmBtn" data-i18n-title="basemap" aria-haspopup="true"></button>
+      <button type="button" class="map-btn" id="searchToggle" aria-label="search">
+        <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </button>
+      <div class="bm-menu" id="bmMenu" hidden></div>
+    </div>
+    <div class="bm-label" id="bmLabel"></div>
+
+    <!-- 凡例 -->
+    <section class="legend" id="legend" hidden>
+      <header><span data-i18n="legendTitle">凡例</span><button type="button" id="legendClose" aria-label="close">×</button></header>
+      <div class="legend-body" id="legendBody"></div>
+    </section>
+
+    <!-- 標高表示 -->
+    <div class="crosshair" id="crosshair" hidden></div>
+    <div class="elev-box" id="elevBox" hidden></div>
+    <div class="elev-tip" id="elevTip" hidden></div>
+
+    <div class="toast" id="toast" hidden></div>
+    <button type="button" class="sheet-btn" id="sheetBtn"><span data-i18n="layerInfo">レイヤ情報</span></button>
+  </main>
+
+  <!-- 印刷用ヘッダー -->
+  <div class="print-head" id="printHead"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/config.js?v=20261125"></script>
+  <script src="js/i18n.js?v=20261125"></script>
+  <script src="js/i18n-adachi.js?v=20261125"></script>
+  <script src="js/layers.js?v=20261125"></script>
+  <script src="js/app.js?v=20261125"></script>
+</body>
+</html>
